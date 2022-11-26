@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trello</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/app.scss">
+    <script src="./javascript/app.js" type="module"></script>
+</head>
+<body>
+    <div id="wrapper">
+        <header id="header">
+            <div id="tytle">
+                Trello
+            </div>
+            <form id="currentTime"></form>
+        </header>
+        <main id="main">
+            <div id="todo">
+                <div id="todo__title">
+                    <div id="todo__title-text">TODO:</div>
+                    <div id="todo__title-counter">0</div>
+                </div>
+                <div id="todo-main">
+                    
+                </div>
+                <button id="todo-footer">Add todo</button>
+            </div>
+            <div id="inProgress">
+                <div id="inProgress__title">
+                    <div id="inProgress__title-text">IN PROGRESS:</div>
+                    <div id="inProgress__title-counter">0</div>
+                </div>
+                <div id="inProgress-main"></div>
+            </div>
+            <div id="done">
+                <div id="done__title">
+                    <div id="done__title-text">DONE:</div>
+                    <div id="done__title-counter">0</div>
+                </div>
+                <div id="done-main"></div>
+                <button id="done-footer">Delete all</button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

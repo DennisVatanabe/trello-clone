@@ -1,0 +1,107 @@
+body {
+    margin: 0 auto;
+    max-width: 1170px;
+    margin-top: 50px;
+    background-color: rgb(245, 245,245);
+}
+#header {
+    max-width: 1170px;
+    height: 100px;
+    border: solid 2px rgb(186, 169, 196);
+    border-radius: 15px;
+    background-color: rgb(223, 213, 230);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+#tytle {
+    margin-left: 50px;
+    font-size: 30px;
+}
+#currentTime {
+    margin-right: 50px;
+    width: 100px;
+    height: 40px;
+    border: solid 2px rgb(158, 157, 159);
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    padding-left: 9px;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+}
+#main {
+    max-width: 1150px;
+    display: flex;
+    margin: 0 auto;
+    justify-content: space-between;
+}
+#todo,
+#inProgress,
+#done {
+    height: 600px;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: solid 2px rgb(199, 219, 190);
+    border-radius: 10px;
+    background-color: #fff;
+}
+#todo__title,
+#inProgress__title,
+#done__title {
+    width: 350px;
+    height: 50px;
+    display: flex;
+    background-color: rgb(217, 231, 214);
+    border: solid 2px rgb(199, 219, 190);
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px;
+}
+#todo-footer,
+#done-footer {
+    width: 350px;
+    height: 50px;
+    background-color: rgb(217, 231, 214);
+    border: solid 2px rgb(199, 219, 190);
+    border-radius: 10px;
+    height: 50px;
+    font-size: 20px;
+    font-weight: 500;
+}
+#todo-footer:hover {
+    background-color: rgb(199, 219, 190);
+    transition: .5s;
+}
+#todo-footer:active {
+    box-shadow: 0px 0px 10px 5px rgb(217, 231, 214);
+}
+#inProgress {
+    border: solid 2px rgb(148, 148, 148);
+}
+#inProgress__title {
+    background-color: rgb(245, 245, 245);
+    border: solid 2px rgb(148, 148, 148);
+}
+#done {
+    border: solid 2px rgb(175, 192, 220);
+}
+#done__title,
+#done-footer {
+    background-color: rgb(221, 231, 250);
+    border: solid 2px rgb(175, 192, 220);
+}
+#done-footer:hover {
+    background-color: rgb(175, 192, 220);
+    transition: .5s;
+}
+#done-footer:active {
+    box-shadow: 0px 0px 10px 5px rgb(221, 231, 250);
+}
