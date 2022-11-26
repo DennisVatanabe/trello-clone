@@ -64,6 +64,9 @@ body {
     font-size: 20px;
     font-weight: 500;
     padding: 10px;
+    position: relative;
+    right: 2px;
+    bottom: 2px;
 }
 #todo-footer,
 #done-footer {
@@ -75,6 +78,9 @@ body {
     height: 50px;
     font-size: 20px;
     font-weight: 500;
+    position: relative;
+    right: 2px;
+    top: 2px;
 }
 #todo-footer:hover {
     background-color: rgb(199, 219, 190);
