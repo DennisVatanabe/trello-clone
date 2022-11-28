@@ -7,9 +7,10 @@ import {
   newTodoCategoryElement,
   containersElements,
   removeMadaleElement,
-  // removeTodoElement,
   modaleAllElement,
-  // cancelDeleteAllElement
+  counterTodoElement,
+  counterProgressElement,
+  counterDoneElement
 } from './app.js'
 
 import { Task } from './conctructors.js'
@@ -42,6 +43,17 @@ function render() {
       buildCardTemplate(element)
     })
   }
+  counter()
+}
+
+function counter() {
+  const tasks = getItem('tasks')
+  const resultTodo = tasks.filter((el) => el.category === "todo")
+  const resultProgress = tasks.filter((el) => el.category === "progress")
+  const resultDone = tasks.filter((el) => el.category === "done")
+  counterTodoElement.innerHTML = resultTodo.length
+  counterProgressElement.innerHTML = resultProgress.length
+  counterDoneElement.innerHTML = resultDone.length
 }
 
 function createCard() {
@@ -73,7 +85,6 @@ function clearContainers() {
 
 function changeContainer(event) {
   const target = document.querySelector('.card__select')
-  console.log(target === event.target);
   if (event.target.classList.contains('card__select')) {
     const elementId = event.target.parentElement.parentElement.id
     const tasks = getItem('tasks')
@@ -87,7 +98,6 @@ function changeContainer(event) {
 }
 
 function showRemoveModale(event) {
-  console.log(444);
   removeMadaleElement.id = event.target.parentElement.parentElement.id
   removeMadaleElement.classList.add('open')
 }
@@ -98,10 +108,17 @@ function hideRemoveModale() {
 }
 
 function deleteTodo(event) {
-  console.log(333);
   const elementId = parseInt(event.target.parentElement.parentElement.id)
   const elements = getItem('tasks')
   const result = elements.filter((el) => el.id !== elementId)
+  setItem('tasks', result)
+  hideRemoveModale()
+  render()
+}
+
+function deleteAllDoneTodo() {
+  elements = getItem('tasks')
+  const result = elements.filter((el) => el.category !== "done")
   setItem('tasks', result)
   hideRemoveModale()
   render()
@@ -123,5 +140,7 @@ export {
   showRemoveModale,
   hideRemoveModale,
   deleteTodo,
-  showDeleteAll
+  showDeleteAll,
+  deleteAllDoneTodo,
+  counter
 }

@@ -1,18 +1,15 @@
 import {
-  time,
-  addCard,
   render,
   newModale,
   cancelAddTodo,
-  removeTodo,
   createCard,
   hideRemoveModale,
   deleteTodo,
   changeContainer,
-  showDeleteAll
+  showDeleteAll,
+  deleteAllDoneTodo,
+  counter
 } from "./functions.js"
-
-import { buildCardTemplate } from "./templates.js"
 
 document.addEventListener('DOMContentLoaded', function() {
   render()
@@ -36,8 +33,13 @@ const deleteTodoElement = document.querySelector('.confirm-remove')
 const deleteAllDoneElement = document.querySelector('#done-footer')
 const modaleAllElement = document.querySelector('.modale__remove-wrapper-all')
 const cancelDeleteAllElement = document.querySelector('.cancel-remove-all')
+const deleteAllElement = document.querySelector('.confirm-remove-all')
+const counterTodoElement = document.querySelector('#todo__title-counter')
+const counterProgressElement = document.querySelector('#inProgress__title-counter')
+const counterDoneElement = document.querySelector('#done__title-counter')
 
 document.addEventListener('change', changeContainer)
+deleteAllElement.addEventListener('click', deleteAllDoneTodo)
 cancelDeleteAllElement.addEventListener('click', hideRemoveModale)
 deleteAllDoneElement.addEventListener('click', showDeleteAll)
 deleteTodoElement.addEventListener('click', deleteTodo)
@@ -63,5 +65,9 @@ export {
   removeMadaleElement,
   deleteAllDoneElement,
   modaleAllElement,
-  cancelDeleteAllElement
+  cancelDeleteAllElement,
+  deleteAllElement,
+  counterTodoElement,
+  counterProgressElement,
+  counterDoneElement
 }
