@@ -8,7 +8,8 @@ import {
   changeContainer,
   showDeleteAll,
   deleteAllDoneTodo,
-  counter
+  modifyCard,
+  addDocumentClick
 } from "./functions.js"
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -37,8 +38,19 @@ const deleteAllElement = document.querySelector('.confirm-remove-all')
 const counterTodoElement = document.querySelector('#todo__title-counter')
 const counterProgressElement = document.querySelector('#inProgress__title-counter')
 const counterDoneElement = document.querySelector('#done__title-counter')
+const cancelModifyElement = document.querySelector('#modale__card-cancel-modify')
+const modifyModaleElement = document.querySelector('.modale-modify')
+const modifyTitleElement = document.querySelector('#titleValue-modify')
+const modifyInnerElement = document.querySelector('#modale-textarea-modify')
+const modifyUserElement = document.querySelector('#modale__user-modify-modify')
+const modifyButtonElement = document.querySelector('#modale__card-confirm-modify')
+const modifyCategoryElement = document.querySelector('#modale__select-modify')
 
 document.addEventListener('change', changeContainer)
+document.addEventListener('click', addDocumentClick)
+modifyCategoryElement.querySelector('change', modifyCard)
+modifyButtonElement.addEventListener('click', modifyCard)
+cancelModifyElement.addEventListener('click', hideRemoveModale)
 deleteAllElement.addEventListener('click', deleteAllDoneTodo)
 cancelDeleteAllElement.addEventListener('click', hideRemoveModale)
 deleteAllDoneElement.addEventListener('click', showDeleteAll)
@@ -69,5 +81,10 @@ export {
   deleteAllElement,
   counterTodoElement,
   counterProgressElement,
-  counterDoneElement
+  counterDoneElement,
+  modifyModaleElement,
+  modifyTitleElement,
+  modifyInnerElement,
+  modifyUserElement,
+  modifyCategoryElement
 }
