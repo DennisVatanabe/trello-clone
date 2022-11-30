@@ -39,7 +39,7 @@ body {
     justify-content: space-between;
 }
 #todo,
-#inProgress,
+#progress,
 #done {
     height: 600px;
     max-width: 350px;
@@ -89,8 +89,15 @@ body {
 #todo-footer:active {
     box-shadow: 0px 0px 10px 5px rgb(217, 231, 214);
 }
-#inProgress {
+#progress {
     border: solid 2px rgb(148, 148, 148);
+    .wrapper-container {
+        height: 576px;
+    }
+    .todo__card {
+        background-color: rgb(245, 245, 245);
+        border: solid 2px rgb(161, 161, 161);
+    }
 }
 #inProgress__title {
     background-color: rgb(245, 245, 245);
@@ -98,6 +105,10 @@ body {
 }
 #done {
     border: solid 2px rgb(175, 192, 220);
+    .todo__card {
+        background-color: rgb(221, 231, 250);
+        border: solid 2px rgb(179, 195, 223);
+    }
 }
 #done__title,
 #done-footer {
@@ -110,4 +121,265 @@ body {
 }
 #done-footer:active {
     box-shadow: 0px 0px 10px 5px rgb(221, 231, 250);
+}
+.wrapper-container {
+    overflow: scroll;
+    height: 496px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    right: 4px;
+}
+.todo__card {
+    margin: auto;
+    margin-top: 6px;
+    margin-bottom: 5px;
+    width: 330px;
+    max-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: rgb(217, 231, 214);
+    border: solid 2px rgb(199, 219, 190);
+    border-radius: 10px;
+    .todo__card-title {
+        display: flex;
+        justify-content: end;
+        p {
+            margin-top: 8px;
+            font-weight: 700;
+        }
+    }
+    .card__footer {
+        font-size: 18px;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 3px;
+        p {
+            font-size: 16px;
+        }
+    }
+    .todo__card-text {
+        margin-left: 16px;
+    }
+    select {
+        border-radius: 5px;
+        background-color: #fff;
+        font-size: 16px;
+        margin: 5px;
+        height: 28px;
+        outline: none;
+        width: 76px;
+    }
+    button {
+        border-radius: 5px;
+        background-color: #fff;
+        margin: 5px;
+        height: 28px;
+        border: solid 1px gray;
+    }
+    .todo__userName {
+        margin-right: 16px;
+    }
+}
+
+#modale {
+    #modale__card {
+        z-index: -1;
+        opacity: 0;
+        position: absolute;
+        top: 200px;
+        left: 35%;
+        margin: auto;
+        width: 530px;
+        height: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: rgb(217, 231, 214);
+        border: solid 2px rgb(199, 219, 190);
+        border-radius: 10px;
+        #modale__card-title,
+        #modale__footer {
+            font-size: 16px;
+            display: flex;
+            justify-content: space-around;
+        }
+        input {
+            outline: none;
+            border: solid 1px grey;
+            border-radius: 5px;
+            text-align: center;
+        }
+        textarea {
+            display: flex;
+            margin: auto;
+            width: 500px;
+            height: 200px;
+            outline: none;
+            resize: none;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            width: 100px;
+            height: 50px;
+            border-radius: 5px;
+            background-color: #fff;
+            margin: 5px;
+            height: 28px;
+            border: solid 1px gray;
+        }
+    }
+}
+
+#modale.open {
+    background-color: rgba($color: #5b5757, $alpha: 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    #modale__card {
+        z-index: 2;
+        opacity: 1;
+    }
+}
+.modale__remove-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 300px;
+    margin: 0 auto;
+    z-index: -2;
+    opacity: 0;
+    background-color: rgba(241, 208, 205, 0.5);
+    width: 100%;
+    height: 100%;
+    .modale-remove {
+        display: flex;
+        margin: auto;
+        width: 400px;
+        height: 180px;
+        background-color: rgba(241, 208, 205, 1);
+        justify-content: space-around;
+        font-size: 54px;
+        flex-wrap: wrap;
+        border: solid 2px rgb(218, 168, 164);
+        border-radius: 15px;
+        button {
+            width: 130px;
+            height: 42px;
+            font-size: 26px;
+            border: solid 2px rgb(160, 160, 160);
+            border-radius: 8px;
+        }
+    }
+}
+.modale__remove-wrapper.open {
+    z-index: 2;
+    opacity: 1;
+}
+.modale__remove-wrapper-all {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-top: 300px;
+    margin: 0 auto;
+    z-index: -3;
+    opacity: 0;
+    background-color: rgba(241, 208, 205, 0.5);
+    width: 100%;
+    height: 100%;
+    .modale-remove-all {
+        display: flex;
+        margin: auto;
+        width: 550px;
+        height: 180px;
+        background-color: rgba(241, 208, 205, 1);
+        justify-content: space-around;
+        font-size: 54px;
+        flex-wrap: wrap;
+        border: solid 2px rgb(218, 168, 164);
+        border-radius: 15px;
+        button {
+            width: 230px;
+            height: 42px;
+            font-size: 26px;
+            border: solid 2px rgb(160, 160, 160);
+            border-radius: 8px;
+        }
+    }
+}
+.modale__remove-wrapper-all.open {
+    z-index: 2;
+    opacity: 1;
+}
+
+.modale-modify {
+    #modale__card-modify {
+        z-index: -2;
+        opacity: 0;
+        position: absolute;
+        top: 200px;
+        left: 35%;
+        margin: auto;
+        width: 530px;
+        height: 350px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        background-color: rgb(217, 231, 214);
+        border: solid 2px rgb(199, 219, 190);
+        border-radius: 10px;
+        #modale__card-title-modify,
+        #modale__footer-modify {
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+        }
+        select {
+            outline: none;
+            border-radius: 5px;
+        }
+        input {
+            outline: none;
+            border: solid 1px grey;
+            border-radius: 5px;
+            text-align: center;
+        }
+        textarea {
+            display: flex;
+            margin: auto;
+            width: 500px;
+            height: 230px;
+            outline: none;
+            resize: none;
+            border-radius: 10px;
+            text-align: center;
+        }
+        button {
+            width: 100px;
+            min-height: 34px;
+            border-radius: 5px;
+            background-color: #fff;
+            margin: 5px;
+            height: 28px;
+            border: solid 1px gray;
+        }
+    }
+}
+
+.modale-modify.open {
+    background-color: rgba($color: #5b5757, $alpha: 0.6);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    #modale__card-modify {
+        z-index: 2;
+        opacity: 1;
+    }
 }
