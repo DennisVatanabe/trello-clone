@@ -228,7 +228,6 @@ function dragNdrop() {
       board.addEventListener('drop', function(e) {
         this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
         this.append(draggetTodo)
-        render()
       })
     }
   }
