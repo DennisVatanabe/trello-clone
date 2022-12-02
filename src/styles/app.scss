@@ -17,7 +17,11 @@ body {
 }
 #tytle {
     margin-left: 50px;
-    font-size: 30px;
+    font-size: 50px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    -webkit-text-stroke: 2px #9e9d9f;
+    -webkit-text-fill-color: rgb(245, 245, 245);
 }
 #currentTime {
     margin-right: 50px;
@@ -67,6 +71,11 @@ body {
     position: relative;
     right: 2px;
     bottom: 2px;
+}
+#done {
+    p {
+        text-decoration: line-through;
+    }
 }
 #todo-footer,
 #done-footer {
@@ -129,6 +138,9 @@ body {
     flex-direction: column;
     position: relative;
     right: 4px;
+    .container {
+        min-height: 496px;
+    }
 }
 .todo__card {
     margin: auto;
@@ -315,7 +327,6 @@ body {
     z-index: 2;
     opacity: 1;
 }
-
 .modale-modify {
     #modale__card-modify {
         z-index: -2;
@@ -370,7 +381,6 @@ body {
         }
     }
 }
-
 .modale-modify.open {
     background-color: rgba($color: #5b5757, $alpha: 0.6);
     width: 100%;
