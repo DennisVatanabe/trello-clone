@@ -20,6 +20,7 @@ function buildCardTemplate(task) {
   const box = document.createElement("div")
   box.id = task.id
   box.classList.add('todo__card')
+  box.setAttribute('draggable', true)
   const template = `
             <div class="todo__card-title">
                 <p class="card__title">${task.title}</p>

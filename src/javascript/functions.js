@@ -73,6 +73,7 @@ function render() {
     })
   }
   counter()
+  dragNdrop()
 }
 
 function counter() {
@@ -189,6 +190,50 @@ function deleteAllDoneTodo() {
 function showDeleteAll() {
   modaleAllElement.classList.add('open')
 }
+
+let draggetTodo = null
+
+function dragNdrop() {
+  const todos = document.querySelectorAll('.todo__card')
+  const todoBoards = document.querySelectorAll('.container')
+
+  for (let i = 0; i < todos.length; i++) {
+    const todo = todos[i]
+
+    todo.addEventListener('dragstart', () => {
+      draggetTodo = todo
+      setTimeout(() => {
+        todo.style.display = 'none'
+      }, 0)
+    })
+
+    todo.addEventListener('dragend', () => {
+      setTimeout(() => {
+        todo.style.display = 'block'
+        let draggetTodo = null
+      }, 0)
+    })
+
+    for (let q = 0; q < todoBoards.length; q++) {
+      const board = todoBoards[q]
+
+      board.addEventListener('dragover', e => e.preventDefault())
+      board.addEventListener('dragenter', function(e) {
+        e.preventDefault()
+        this.style.backgroundColor = 'rgba(0, 0, 0, .1)'
+      })
+      board.addEventListener('dragleave', function(e) {
+        this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
+      })
+      board.addEventListener('drop', function(e) {
+        this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
+        this.append(draggetTodo)
+        render()
+      })
+    }
+  }
+}
+dragNdrop()
 
 export {
   newModale,
