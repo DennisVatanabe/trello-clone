@@ -95,10 +95,13 @@ function createCard() {
   const task = new Task({ title, description, user, category })
   const items = getItem('tasks')
 
-  items.push(task)
-  setItem('tasks', items)
-  clearCard()
-  render()
+  const progress = items.filter((el) => el.category === 'progress')
+  if (progress.length < 6 ) {
+    items.push(task)
+    setItem('tasks', items)
+    clearCard()
+    render()
+  }
 }
 
 function modifyCard(event) {
@@ -111,22 +114,26 @@ function modifyCard(event) {
   )
 
   const tasks = getItem('tasks')
-  const result = tasks.map((el) => {
-    if (el.id === elementId) {
-      return {
-        ...el,
-        title,
-        description,
-        user,
-        category
-      }
-    }
-    return el
-  })
+  const progress = tasks.filter((el) => el.category === 'progress')
 
-  setItem('tasks', result)
-  hideRemoveModale()
-  render()
+  if (progress.length < 6 ) {
+    const result = tasks.map((el) => {
+      if (el.id === elementId) {
+        return {
+          ...el,
+          title,
+          description,
+          user,
+          category
+        }
+      }
+      return el
+    })
+
+    setItem('tasks', result)
+    hideRemoveModale()
+    render()
+  }
 }
 
 function clearCard() {
@@ -143,17 +150,22 @@ function clearContainers() {
 
 function changeContainer(event) {
   const target = document.querySelector('.card__select')
+
   if (event.target.classList.contains('card__select')) {
     const elementId = event.target.parentElement.parentElement.id
     const tasks = getItem('tasks')
-    const result = tasks.map((el) => ({
-      ...el,
-      category:
-        el.id === parseInt(elementId) ? event.target.value : el.category,
-    }))
-
-    setItem('tasks', result)
-    render()
+    const progress = tasks.filter((el) => el.category === 'progress')
+    if (progress.length < 6) {
+      const result = tasks.map((el) => ({
+        ...el,
+        category:
+          el.id === parseInt(elementId) ? event.target.value : el.category,
+      }))
+      setItem('tasks', result)
+      render()
+    } else {
+      console.log(555)
+    }
   }
 }
 
@@ -193,9 +205,10 @@ function showDeleteAll() {
 
 let draggetTodo = null
 
-function dragNdrop() {
+function dragNdrop(event) {
   const todos = document.querySelectorAll('.todo__card')
   const todoBoards = document.querySelectorAll('.container')
+  const elements = getItem('tasks')
 
   for (let i = 0; i < todos.length; i++) {
     const todo = todos[i]
@@ -203,7 +216,7 @@ function dragNdrop() {
     todo.addEventListener('dragstart', () => {
       draggetTodo = todo
       setTimeout(() => {
-        todo.style.display = 'none'
+        draggetTodo.style.display = 'none'
       }, 0)
     })
 
@@ -216,6 +229,7 @@ function dragNdrop() {
 
     for (let q = 0; q < todoBoards.length; q++) {
       const board = todoBoards[q]
+      const container = board.parentElement.parentElement
 
       board.addEventListener('dragover', e => e.preventDefault())
       board.addEventListener('dragenter', function(e) {
@@ -227,7 +241,24 @@ function dragNdrop() {
       })
       board.addEventListener('drop', function(e) {
         this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
-        this.append(draggetTodo)
+        const progress = elements.filter((el) => el.category === 'progress')
+        const category = container.getAttribute('category')
+
+        if (progress.length > 5 && category === 'progress') {
+          console.log(222);
+          render()
+        } else {
+          this.append(draggetTodo)
+
+          const todos = elements.map((el) => {
+            if (el.id === parseInt(draggetTodo.id)) {
+              return {...el, category}
+            }
+            return el
+          })
+          setItem('tasks', todos)
+          render()
+        }
       })
     }
   }
