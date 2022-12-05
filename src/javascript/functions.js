@@ -16,6 +16,8 @@ import {
   modifyInnerElement,
   modifyUserElement,
   modifyCategoryElement,
+  limitModaleElement,
+  todoBoardsElements
 } from "./app.js"
 
 import { Task } from "./conctructors.js"
@@ -73,7 +75,6 @@ function render() {
     })
   }
   counter()
-  dragNdrop()
 }
 
 function counter() {
@@ -95,10 +96,16 @@ function createCard() {
   const task = new Task({ title, description, user, category })
   const items = getItem('tasks')
 
-  items.push(task)
-  setItem('tasks', items)
-  clearCard()
-  render()
+  const progress = items.filter((el) => el.category === 'progress')
+  if (category === 'progress' && progress.length > 5 ) {
+    newModaleElement.classList.remove('open')
+    callLimitModale()
+    } else {
+      items.push(task)
+      setItem('tasks', items)
+      clearCard()
+      render()
+    }
 }
 
 function modifyCard(event) {
@@ -111,22 +118,25 @@ function modifyCard(event) {
   )
 
   const tasks = getItem('tasks')
-  const result = tasks.map((el) => {
-    if (el.id === elementId) {
-      return {
-        ...el,
-        title,
-        description,
-        user,
-        category
-      }
-    }
-    return el
-  })
+  const progress = tasks.filter((el) => el.category === 'progress')
 
-  setItem('tasks', result)
-  hideRemoveModale()
-  render()
+  if (progress.length <= 6 ) {
+    const result = tasks.map((el) => {
+      if (el.id === elementId) {
+        return {
+          ...el,
+          title,
+          description,
+          user,
+          category
+        }
+      }
+      return el
+    })
+    setItem('tasks', result)
+    hideRemoveModale()
+    render()
+  }
 }
 
 function clearCard() {
@@ -143,17 +153,22 @@ function clearContainers() {
 
 function changeContainer(event) {
   const target = document.querySelector('.card__select')
+
   if (event.target.classList.contains('card__select')) {
     const elementId = event.target.parentElement.parentElement.id
     const tasks = getItem('tasks')
-    const result = tasks.map((el) => ({
+    const progress = tasks.filter((el) => el.category === 'progress')
+    if (progress.length > 5 && event.target.value === 'progress') {
+    callLimitModale()
+    } else {
+      const result = tasks.map((el) => ({
       ...el,
       category:
         el.id === parseInt(elementId) ? event.target.value : el.category,
     }))
-
     setItem('tasks', result)
     render()
+    }
   }
 }
 
@@ -166,6 +181,7 @@ function hideRemoveModale() {
   removeMadaleElement.classList.remove('open')
   modaleAllElement.classList.remove('open')
   modifyModaleElement.classList.remove('open')
+  limitModaleElement.classList.remove('open')
 }
 
 function deleteTodo(event) {
@@ -191,49 +207,64 @@ function showDeleteAll() {
   modaleAllElement.classList.add('open')
 }
 
+function callLimitModale() {
+  limitModaleElement.classList.add('open')
+}
+
 let draggetTodo = null
 
-function dragNdrop() {
-  const todos = document.querySelectorAll('.todo__card')
-  const todoBoards = document.querySelectorAll('.container')
-
-  for (let i = 0; i < todos.length; i++) {
-    const todo = todos[i]
-
-    todo.addEventListener('dragstart', () => {
-      draggetTodo = todo
+function dragStart(event) {
+    if (event.target.classList.contains('todo__card')) {
+      draggetTodo = event.target
       setTimeout(() => {
-        todo.style.display = 'none'
+        draggetTodo.style.display = 'none'
       }, 0)
-    })
+  }
+}
 
-    todo.addEventListener('dragend', () => {
-      setTimeout(() => {
-        todo.style.display = 'block'
-        let draggetTodo = null
-      }, 0)
-    })
+function dragOver(event) {
+  event.preventDefault()
+}
 
-    for (let q = 0; q < todoBoards.length; q++) {
-      const board = todoBoards[q]
+// function dragEnter(event) {
+//   if (event.target.classList.contains('todo__card')) {
+//     const board = todoBoardsElements.target
+//   }
+// }
 
-      board.addEventListener('dragover', e => e.preventDefault())
-      board.addEventListener('dragenter', function(e) {
-        e.preventDefault()
-        this.style.backgroundColor = 'rgba(0, 0, 0, .1)'
+function dragEnd(event) {
+  if (event.target.classList.contains('todo__card')) {
+      event.target.style.display = 'block'
+  }
+}
+
+function dragLeave(event) {
+  if (event.target.classList.contains('todo__card')) {
+  }
+}
+
+function drop(event) {
+  const elements = getItem('tasks')
+  if (event.target.classList.contains('container')) {
+    event.target.style.display = 'block'
+    const category = event.target.getAttribute('category')
+    const progress = elements.filter((el) => el.category === 'progress')
+    if (category === 'progress' && progress.length > 5) {
+      callLimitModale()
+    } else {
+      const todos = elements.map((el) => {
+        if (el.id === parseInt(draggetTodo.id)) {
+          return {...el, category}
+        }
+        return el
       })
-      board.addEventListener('dragleave', function(e) {
-        this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
-      })
-      board.addEventListener('drop', function(e) {
-        this.style.backgroundColor = 'rgba(0, 0, 0, 0)'
-        this.append(draggetTodo)
-        render()
-      })
+      event.target.append(draggetTodo)
+      draggetTodo = null
+      setItem('tasks', todos)
+      render()
     }
   }
 }
-dragNdrop()
 
 export {
   newModale,
@@ -250,5 +281,11 @@ export {
   deleteAllDoneTodo,
   counter,
   modifyCard,
-  addDocumentClick
+  addDocumentClick,
+  dragStart,
+  dragEnd,
+  // dragEnter,
+  dragLeave,
+  drop,
+  dragOver
 }
