@@ -9,7 +9,13 @@ import {
   showDeleteAll,
   deleteAllDoneTodo,
   modifyCard,
-  addDocumentClick
+  addDocumentClick,
+  dragStart,
+  dragEnd,
+  // dragEnter,
+  dragLeave,
+  drop,
+  dragOver
 } from "./functions.js"
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -45,10 +51,21 @@ const modifyInnerElement = document.querySelector('#modale-textarea-modify')
 const modifyUserElement = document.querySelector('#modale__user-modify-modify')
 const modifyButtonElement = document.querySelector('#modale__card-confirm-modify')
 const modifyCategoryElement = document.querySelector('#modale__select-modify')
+const todoBoardsElements = document.querySelectorAll('.container')
+const limitModaleElement = document.querySelector('.wrapper-modale-limit')
+const removeLimitModaleElement = document.querySelector('.limit-confirm')
 
 document.addEventListener('change', changeContainer)
 document.addEventListener('click', addDocumentClick)
-modifyCategoryElement.querySelector('change', modifyCard)
+document.addEventListener('dragstart', dragStart)
+document.addEventListener('dragend', dragEnd)
+// document.addEventListener('dragenter', dragEnter)
+document.addEventListener('dragleave', dragLeave)
+document.addEventListener('drop', drop)
+document.addEventListener('dragover', dragOver)
+
+removeLimitModaleElement.addEventListener('click', hideRemoveModale)
+modifyCategoryElement.querySelector('change', modifyCard) // нужно разобраться
 modifyButtonElement.addEventListener('click', modifyCard)
 cancelModifyElement.addEventListener('click', hideRemoveModale)
 deleteAllElement.addEventListener('click', deleteAllDoneTodo)
@@ -86,5 +103,7 @@ export {
   modifyTitleElement,
   modifyInnerElement,
   modifyUserElement,
-  modifyCategoryElement
+  modifyCategoryElement,
+  todoBoardsElements,
+  limitModaleElement
 }
